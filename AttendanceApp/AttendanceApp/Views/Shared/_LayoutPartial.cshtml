@@ -1,0 +1,14 @@
+﻿@using MD.PersianDateTime;
+
+@{
+    var persianTimeNow = new PersianDateTime(DateTime.Now).ToLongDateString();
+}
+
+<li>
+    <a href="#">
+        <i class="fa  fa-fw"></i> @persianTimeNow  <i class="fa"></i>
+    </a>
+
+    <!-- /.dropdown-alerts -->
+</li>
+

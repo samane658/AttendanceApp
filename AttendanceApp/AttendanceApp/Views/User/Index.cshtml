@@ -1,0 +1,42 @@
+﻿@model AttendanceApp.Models.ApplicationUser
+@{
+    /**/
+
+    ViewBag.Title = "پروفایل کاربر";
+    Layout = "~/Views/Shared/_Layout -UserProfile.cshtml";
+}
+
+
+
+
+<h3>@ViewBag.Title</h3>
+@*
+    ToDo use real user information
+*@
+
+
+<table class="jumbotron">
+    <tr class="row">
+        <td class="col-md-9">
+            <div class="row" style="margin:20px 10Px">
+                @*@Html.Label($"{Model.name} {Model.lastName} ")*@
+                @Html.Label("سمانه بازگیری")
+            </div>
+
+            <div class="row">
+                @Html.Label($"{DateTime.Now}")
+            </div>
+
+        </td>
+        <td class="col-md-3">
+            @* <img src="~/image/@Model.picPath" class="img-circle  user-pic" />*@
+            <img src="~/image/2.jpg" class="img-circle  user-pic" />
+        </td>
+
+    </tr>
+
+</table>
+
+
+
+

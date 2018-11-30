@@ -1,0 +1,87 @@
+﻿@model AttendanceApp.Models.rest
+@using MD.PersianDateTime;
+@{
+    ViewBag.Title = "درخواست مرخصی";
+    Layout = "~/Views/Shared/_Layout -UserProfile.cshtml";
+}
+
+<h3>@ViewBag.Title</h3>
+
+@using (Html.BeginForm("RestEntry", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="container form-group" style="margin-top:30px">
+        <div class=" radio radio-inline" style="margin:20px">
+            <label>
+                <input type="radio" name="dailyrest" checked />
+                <label>مرخصی ساعتی</label>
+
+            </label>
+
+        </div>
+        <div class="radio radio-inline " style="margin:20px">
+            <label>
+                <input type="radio" name="dailyrest" />
+                <label>مرخصی روزانه</label>
+            </label>
+        </div>
+
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(d => d.startDate, new { @class = "control-label col-md-2", style = "margin-top:25px" })
+
+        <div class="col-md-10" style="margin-top:20px" >
+            @Html.TextBoxFor(d => d.startDate, 
+                             new { @class = "form-control ", id= "date-input-start", placeholder = "تاریخ شروع " }
+                             )
+            <span  class="fa fa-calendar col-md-2"  data-MdDateTimePicker="true" data-TargetSelector="#date-input-start" data-EnableTimePicker="false" data-englishnumber="true" data-fromdate="true" data-todate="true" data-Placement="bottom" data-Trigger="click" ></span>
+            @Html.ValidationMessageFor(model => model.startDate, "", new { @class = "text-danger" })
+
+        </div>
+
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(d => d.startTime,
+                        new { @class = "control-label col-md-2", style = "padding-top:25px" }
+                        )
+        
+        <div class="col-md-10" style="margin-top:20px">
+            @Html.TextBoxFor(d => d.startTime,
+           new { @class = "form-control",id= "date-input-startTime", placeholder = "ساعت:دقیقه:ثانیه 08:02:00  " }
+           )
+            
+            @Html.ValidationMessageFor(model => model.startTime, "", new { @class = "text-danger" })
+        </div>
+
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(d => d.endDate, new { @class = "control-label col-md-2", style = "margin-top:25px" })
+
+        <div class="col-md-10" style="margin-top:20px">
+            @Html.TextBoxFor(d => d.endDate,
+           new { @class = "form-control", id = "date-input-end", placeholder = "تاریخ پایان " }
+           )
+            <span class="fa fa-calendar col-md-2" data-MdDateTimePicker="true" data-TargetSelector="#date-input-end" data-EnableTimePicker="false" data-englishnumber="true" data-fromdate="true" data-todate="true" data-Placement="bottom" data-Trigger="click"></span>
+            @Html.ValidationMessageFor(model => model.endDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(d => d.endTime, new { @class = "control-label col-md-2", style = "margin-top:25px" })
+
+        <div class="col-md-10" style="margin-top:20px">
+            @Html.TextBoxFor(d => d.endTime,
+           new { @class = "form-control",id= "date-input-endTime", placeholder = "ساعت:دقیقه:ثانیه 17:02:00   " }
+           )
+            
+            @Html.ValidationMessageFor(model => model.endTime, "", new { @class = "text-danger" })
+        </div>
+
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10" style="margin-top:20px">
+            <input type="submit" value="ثبت" class="btn btn-success pull-left" />
+        </div>
+    </div>
+
+}
+
+

@@ -1,0 +1,204 @@
+﻿
+@using AttendanceApp.Models
+@using Microsoft.AspNet.Identity
+
+@using MD.PersianDateTime;
+
+
+    
+
+    <html>
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title -صفحه کاربر</title>
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+        @* @if (IsSectionDefined("CtrlJavascript"))
+        {
+            @RenderSection("CtrlJavascript");
+        }*@
+
+    </head>
+
+    <body>
+
+        <div id="wrapper">
+
+            <!-- Navigation -->
+            <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="@Url.Action("Index","Home")">سیستم حضور و غیاب دانیال</a>
+                </div>
+                <!-- /.navbar-header -->
+
+                <ul class="nav navbar-top-links navbar-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench fa-fw"></i> مدیر اداری <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class=" dropdown-menu">
+                            <li>
+                                <a href="#">
+
+                                    <div>تنظیمات اولیه</div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#">
+
+                                    <div>محاسبه کارکرد</div>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-messages -->
+                    </li>
+                    <!-- /.dropdown -->
+                    <!-- /.dropdown -->
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-dashboard fa-fw"></i> ادمین سیستم  <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class=" dropdown-menu">
+                            <li>
+                                <a href="#">
+
+                                    <div>مدیریت کارمندان</div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#">
+
+                                    <div>سمت ها</div>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-alerts -->
+                    </li>
+                    <!-- /.dropdown -->
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-user fa-fw"></i>کارمند / مدیر <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="@Url.Action("Index","User")"><i class="fa fa-user fa-fw"></i> پروفایل کارمند</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-gear fa-fw"></i> پروفایل مدیر</a>
+                            </li>
+                            <li class="divider"></li>
+                            @Html.Partial("_LoginPartial")
+
+
+                        </ul>
+                        <!-- /.dropdown-user -->
+                    </li>
+
+                  @Html.Partial("_UserProfilePartial")
+                    <!-- /.dropdown -->
+                </ul>
+                <!-- /.navbar-top-links -->
+                <!-- /.navbar-static-side -->
+            </nav>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    @if (!string.IsNullOrEmpty(TempData["Message"]?.ToString()))
+                    {
+                        <div class="alert alert-@(TempData["MessageClass"]??"success")">
+                            @TempData["Message"]
+                        </div>
+                    }
+
+                </div>
+            </div>
+
+
+
+
+
+
+            <!-- Page Content -->
+            <div id="page-wrapper">
+
+
+                <!-- /.navbar-static-side -->
+
+                <div class="container-fluid">
+                    <div class="row">
+
+                        <div class=" col-lg-2   ">
+                            <div>
+                                <ul class="nav" id="side-menu">
+
+                                    <li>
+                                        <a href="@Url.Action("IOEntry")">
+                                            <i class="fa fa-dashboard fa-fw"></i> ثبت ورود و خروج
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("RestEntry" )"><i class="fa fa-bar-chart-o fa-fw"></i> ثبت مرخصی<span class="fa arrow"></span></a>
+
+                                        <!-- /.nav-second-level -->
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("DailyReport")"><i class="fa fa-table fa-fw"></i> تایم شیت روزانه</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("MonthlyReport")"><i class="fa fa-edit fa-fw"></i> تایم شیت ماهانه</a>
+                                    </li>
+
+
+
+                                </ul>
+                            </div>
+                            <!-- /.sidebar-collapse -->
+                        </div>
+
+                        <div class="col-lg-10">
+                            @RenderBody()
+                        </div>
+                    </div>
+
+                    <!-- /.row -->
+                </div>
+                <!-- /.container-fluid -->
+            </div>
+            <!-- /#page-wrapper -->
+
+        </div>
+        <!-- /#wrapper -->
+        <!-- jQuery -->
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+
+    </body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

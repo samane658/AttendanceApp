@@ -1,0 +1,22 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+
+    <li>
+        <form method="post" action="@Url.Action("LogOff", "Account")">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="fa fa-sign-out fa-fw">
+                <span class="fa fa-power-off"></span>
+                خروج
+            </button>
+        </form>
+    </li>
+
+}
+else
+{
+
+    <li>@Html.ActionLink("ورود", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+
+}
+
