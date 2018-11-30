@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - سیستم حضور و غیاب</title>
+    <title>@ViewBag.Title - مدیریت سیستم حضور و غیاب</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -12,47 +12,26 @@
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#"> سیستم حضور و غیاب</a>
+                    <a class="navbar-brand" href="#"> مدیریت سیستم حضور و غیاب</a>
                 </div>
                 <ul class="nav navbar-nav">
                     <li>
-                        @*@Html.ActionLink("خانه", "Index", "Home")*@
-                        <a href="@Url.Action("Index", "Home")">
+                        <a href="@Url.Action("Index", "ApplicationUsers")">
                             <span class="fa fa-home"></span>
                         </a>
                     </li>
-                    <li class="active"><a href="#">لیست کارمندان</a></li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            مدیر اداری
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">تنظیمات اولیه سیستم</a></li>
-                            <li><a href="#">محاسبه کارکرد</a></li>
-
-                        </ul>
-</ul>
-                    </li>
-
+                    <li ><a href="@Url.Action("Create", "ApplicationUsers")">افزودن کارمند</a></li>
+                    <li ><a href="@Url.Action("Index", "Positions")">جایگاه های کاری</a></li>
 
                 </ul>
-                <ul class="nav navbar-nav navbar-left">
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                          کاربر لاگین شده
-                            <span class="caret"></span>
+                <div class="nav navbar-nav navbar-left">
+                        <a class="navbar-brand" href="@Url.Action("Index", "ApplicationUsers")">
+                          صفحه ادمین اصلی
                         </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="@Url.Action("Edit", "Resumes")">پروفایل </a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">
+                        <a class="navbar-brand" href="#">
                             <span class="fa fa-power-off"></span>
                         </a>
-                    </li>
-                </ul>
+                </div>
             </div>
         </nav>
     </header>
@@ -76,20 +55,6 @@
         </div>
     </div>
     <footer class="container-fluid">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <ul>
-                        <li>
-                            <a href="@Url.Action("Index", "Home", new { Area = "Admin" })">ورود به بخش مدیریت</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-6">
-
-                </div>
-            </div>
-        </div>
         <div class="row">
             <div class="col-md-6 col-md-offset-3 text-center">
                 &copy; @DateTime.Now.Year

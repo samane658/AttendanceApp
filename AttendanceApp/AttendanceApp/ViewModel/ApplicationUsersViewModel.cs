@@ -36,6 +36,7 @@ namespace AttendanceApp.ViewModel
         public string gender { get; set; }
         [Display(Name = "عکس")]
         public HttpPostedFileBase UploadedpicFile { get; set; }
+
         [Index(IsUnique = true)]
         [Display(Name ="ایمیل")]
         public string Email { get; set; }

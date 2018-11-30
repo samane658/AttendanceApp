@@ -1,0 +1,40 @@
+﻿@model AttendanceApp.Models.position
+
+@{
+    ViewBag.Title = "حذف";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>حذف</h2>
+
+<h3>از اینکه میخواهید اطلاعات این کارمند را حذف کنید مطئن هستید؟</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.positionName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.positionName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.salary)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.salary)
+        </dd>
+
+    </dl>
+
+@using (Html.BeginForm("create", "positions", FormMethod.Post, new { enctype = "multipart/form-data" })) { 
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="حذف" class="btn btn-default" /> |
+            @Html.ActionLink("بازگشت به لیست", "Index")
+        </div>
+    }
+</div>

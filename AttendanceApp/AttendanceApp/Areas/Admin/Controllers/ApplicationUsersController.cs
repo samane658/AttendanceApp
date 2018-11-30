@@ -7,6 +7,9 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AttendanceApp.Models;
+using AttendanceApp.ViewModel;
+using System.IO;
+
 
 namespace AttendanceApp.Areas.Admin.Controllers
 {
@@ -14,14 +17,12 @@ namespace AttendanceApp.Areas.Admin.Controllers
     {
         private AppDbContext db = new AppDbContext();
 
-        // GET: Admin/ApplicationUsers
         public ActionResult Index()
         {
             var applicationUsers = db.Users.Include(a => a.position);
             return View(applicationUsers.ToList());
         }
 
-        // GET: Admin/ApplicationUsers/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -36,32 +37,67 @@ namespace AttendanceApp.Areas.Admin.Controllers
             return View(applicationUser);
         }
 
-        // GET: Admin/ApplicationUsers/Create
         public ActionResult Create()
         {
             ViewBag.positionId = new SelectList(db.Positions, "Id", "positionName");
             return View();
         }
 
-        // POST: Admin/ApplicationUsers/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,name,lastName,positionName,address,cellPhone,birthDate,gender,picPath,ManagerId,positionId,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
+        public ActionResult Create(ApplicationUsersViewModel viewModel)
         {
+            ApplicationUsersViewModel vm = new ApplicationUsersViewModel();
+            vm = viewModel;
+
+            if (viewModel.UploadedpicFile != null)
+            {
+                var extension = Path.GetExtension(path: viewModel.UploadedpicFile.FileName).ToLower();
+
+                if (extension != ".jpg" && extension != ".png" && extension != ".gif" && extension != ".jpeg")
+                {
+                    ModelState.AddModelError("UploadedpicFile", "فایل ارسالی شما باید یک عکس باشد");
+                }
+            }
+
             if (ModelState.IsValid)
             {
+                ApplicationUser applicationUser = new ApplicationUser();
+                //intializing appuser variable
+                applicationUser.PasswordHash = GetHashCode(viewModel.password);
+                applicationUser.name = viewModel.name;
+                applicationUser.birthDate = viewModel.birthDate;
+                applicationUser.lastName = viewModel.lastName;
+                applicationUser.Email = viewModel.Email;
+                applicationUser.positionName = viewModel.positionName;
+                applicationUser.address = viewModel.address;
+                applicationUser.cellPhone = viewModel.cellPhone;
+                applicationUser.gender = viewModel.gender;
+                applicationUser.ManagerId = viewModel.ManagerId;
+                //adding pic
+                var extension = Path.GetExtension(viewModel.UploadedpicFile.FileName).ToLower();
+
+
+                var fileName = $"{Guid.NewGuid()}{extension}";
+
+                var path = Path.Combine(Server.MapPath("~/Images/"), fileName);
+
+                viewModel.UploadedpicFile.SaveAs(path);
+                applicationUser.picPath = fileName;
+
                 db.Users.Add(applicationUser);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.positionId = new SelectList(db.Positions, "Id", "positionName", applicationUser.positionId);
-            return View(applicationUser);
+            return View(viewModel);
         }
 
-        // GET: Admin/ApplicationUsers/Edit/5
+        private string GetHashCode(string password)
+        {
+         return GetHashCode(password);
+        }
+
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -77,9 +113,6 @@ namespace AttendanceApp.Areas.Admin.Controllers
             return View(applicationUser);
         }
 
-        // POST: Admin/ApplicationUsers/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,name,lastName,positionName,address,cellPhone,birthDate,gender,picPath,ManagerId,positionId,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
@@ -94,7 +127,6 @@ namespace AttendanceApp.Areas.Admin.Controllers
             return View(applicationUser);
         }
 
-        // GET: Admin/ApplicationUsers/Delete/5
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -109,7 +141,6 @@ namespace AttendanceApp.Areas.Admin.Controllers
             return View(applicationUser);
         }
 
-        // POST: Admin/ApplicationUsers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
