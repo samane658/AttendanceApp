@@ -6,8 +6,6 @@
 }
 
 <h2>@ViewBag.title</h2>
-@if (Model != null)
-{
 
         <table class="table">
             <tr>
@@ -31,8 +29,11 @@
                 </th>
                 <th></th>
             </tr>
+@if (Model != null)
+{
 
-        @foreach (var item in Model) {
+    foreach (var item in Model)
+        {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.startDate)
@@ -53,7 +54,7 @@
                     @Html.DisplayFor(modelItem => item.personId)
                 </td>
                 <td>
-                    @Html.ActionLink("حذف و عدم پذیرش", "Delete", new { id=item.Id })
+                    @Html.ActionLink("حذف و عدم پذیرش", "Delete", new { id = item.Id })
                 </td>
                 <td>
                     @Html.ActionLink("پذیرش درخواست", "Acceptrest", new { id = item.Id })
@@ -61,6 +62,5 @@
 
             </tr>
         }
-
-        </table>
 }
+        </table>
