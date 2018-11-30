@@ -1,0 +1,66 @@
+﻿@model IEnumerable<AttendanceApp.Models.rest>
+
+@{
+    ViewBag.Title = "درخواست های مرخصی";
+    Layout = "~/Views/Shared/_Layout - manager.cshtml";
+}
+
+<h2>@ViewBag.title</h2>
+@if (Model != null)
+{
+
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.startDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.endDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.startTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.endTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.isCommited)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.personId)
+                </th>
+                <th></th>
+            </tr>
+
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.startDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.endDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.startTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.endTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isCommited)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.personId)
+                </td>
+                <td>
+                    @Html.ActionLink("حذف و عدم پذیرش", "Delete", new { id=item.Id })
+                </td>
+                <td>
+                    @Html.ActionLink("پذیرش درخواست", "Acceptrest", new { id = item.Id })
+                </td>
+
+            </tr>
+        }
+
+        </table>
+}

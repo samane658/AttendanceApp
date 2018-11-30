@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using AttendanceApp.Models;
+using System.IO;
 
 namespace AttendanceApp.Controllers
 {
@@ -17,6 +18,7 @@ namespace AttendanceApp.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        AppDbContext db = new AppDbContext();
 
         public AccountController()
         {
@@ -151,10 +153,39 @@ namespace AttendanceApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+
+            var logoSize = model.picPath.ContentLength / 1024;
+            var extension = Path.GetExtension(model.picPath.FileName).ToLower();
+
+            if (logoSize > 500)
+            {
+                ModelState.AddModelError("UploadedLogoFile", "حجم فایل ارسالی نباید بیش از ۵۰۰ کیلو بایت باشد");
+            }
+            if (extension != ".jpg" && extension != ".png" && extension != ".gif" && extension != ".jpeg")
+            {
+                ModelState.AddModelError("UploadedLogoFile", "فایل ارسالی شما باید یک عکس باشد");
+            }
+
+            var fileName = $"{Guid.NewGuid()}{extension}";
+            var path = Path.Combine(Server.MapPath("~/image/"), fileName);
+            model.picPath.SaveAs(path);
+
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email,
+                                                 Email = model.Email,
+                                                 name=model.name,
+                                                 lastName=model.lastName,
+                                                 address=model.address,
+                                                 birthDate=model.birthDate,
+                                                 cellPhone=model.cellPhone,
+                                                 positionName=model.positionName,
+                                                 picPath=fileName,
+                                                 gender=model.gender
+
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
+                UserManager.AddToRoles(user.Id,"User");
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);

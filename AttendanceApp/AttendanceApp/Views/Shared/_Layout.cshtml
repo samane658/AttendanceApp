@@ -56,19 +56,19 @@
                 <!-- /.dropdown -->
                 <!-- /.dropdown -->
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="@Url.Action("Index","ApplicationUsers",new { Area = "Admin" })">
                         <i class="fa fa-dashboard fa-fw"></i> ادمین سیستم  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class=" dropdown-menu">
                         <li>
-                            <a href="#">
+                            <a href="@Url.Action("Edit","ApplicationUsers",new { Area = "Admin"})">
 
                                 <div>مدیریت کارمندان</div>
                             </a>
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#">
+                            <a href="@Url.Action("Index","positions",new { Area = "Admin"})">
 
                                 <div>سمت ها</div>
                             </a>
@@ -86,7 +86,7 @@
                             <a href="@Url.Action("Index","User")"><i class="fa fa-user fa-fw"></i> پروفایل کارمند</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-gear fa-fw"></i> پروفایل مدیر</a>
+                            <a href="@Url.Action("Index","Manager")"><i class="fa fa-gear fa-fw"></i> پروفایل مدیر</a>
                         </li>
                         <li class="divider"></li>
                         @Html.Partial("_LoginPartial")
@@ -95,6 +95,7 @@
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>
+               
 
                 @Html.Partial("_LayoutPartial")
                 <!-- /.dropdown -->

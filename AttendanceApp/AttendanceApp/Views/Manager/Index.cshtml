@@ -1,0 +1,66 @@
+﻿@model IEnumerable<AttendanceApp.Models.inout>
+
+@{
+    ViewBag.Title = "وضعیت کاری کارمندان";
+    Layout = "~/Views/Shared/_Layout - manager.cshtml";
+}
+
+<h2>@ViewBag.title</h2>
+@if (Model != null)
+{
+
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.personId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.startTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.endTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.isRest)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.isCommited)
+                </th>
+                <th></th>
+            </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.personId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.startTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.endTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isRest)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isCommited)
+                </td>
+                <td>
+                    @Html.ActionLink("تایید", "Commit", new { id = item.Id }) |
+                </td>
+                <td>
+                    @Html.ActionLink("تایید مرخصی", "Restconfirm", new { id = item.Id }) |
+                </td>
+
+            </tr>
+        }
+
+        </table>
+}

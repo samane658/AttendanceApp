@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Data.Entity;
 
+
 namespace AttendanceApp.Controllers
 {
 
@@ -83,7 +84,8 @@ namespace AttendanceApp.Controllers
              return View(userprofile);
         }
        
-        public ActionResult IEntry( )
+        [HttpPost]
+        public ActionResult IOEntry(DateTime? startTime)
         {
             var currentuserid = User.Identity.GetUserId();
             if(ModelState.IsValid)
@@ -91,21 +93,26 @@ namespace AttendanceApp.Controllers
                 inout newio = new inout();
                 newio.personId = currentuserid;
                 newio.date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-                newio.startTime = new DateTime(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+                newio.startTime = Convert.ToDateTime($"{newio.date.Hour}:{newio.date.Minute}:{newio.date.Second}");
+                //new DateTime(newio.date.Hour, newio.date.Minute, newio.date.Second);
                 newio.endTime = newio.startTime;
                 db.Inouts.Add(newio);
                 //db.SaveChanges();
+                TempData["Message"] = "ورود شما ثبت شد  ";
+                TempData["MessageClass"] = "success";
             }
+            
 
             return View();
         }
 
 
-        
-        public ActionResult OEntry()
+        [HttpPost]
+        public ActionResult IOEntry(DateTime? endTime,DateTime? dateTime)
         {
             var currentuserid = User.Identity.GetUserId();
             var today= new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+            //ToDo exception
             var exist = db.Inouts.First(io => io.personId == currentuserid && io.date == today && io.startTime == io.endTime);
                 if(exist != null)
                 {
@@ -114,11 +121,19 @@ namespace AttendanceApp.Controllers
                 newo.Id = exist.Id;
                 newo.date = exist.date;
                 newo.startTime = exist.startTime;
-                newo.endTime= new DateTime(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+                newo.endTime = Convert.ToDateTime($"{newo.date.Hour}:{newo.date.Minute}:{newo.date.Second}");
+                    // new DateTime(newo.date.Date.Hour, newo.date.Date.Minute, newo.date.Date.Second);
                 newo.isRest = false;
                 newo.isCommited = false;
                 db.Entry(newo).State = EntityState.Modified;
                 //db.SaveChanges();
+                TempData["Message"] = "خروج شما ثبت شد  ";
+                TempData["MessageClass"] = "success";
+            }
+            else
+            {
+                TempData["Message"] = "ورود شما ثبت نشده است   ";
+                TempData["MessageClass"] = "danger";
             }
 
             return RedirectToAction("IOEntry","User");
